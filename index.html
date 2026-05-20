@@ -316,7 +316,7 @@ function performSearch(value){
         const question =
             normalize(q.question);
 
-        return question.includes(value);
+        return question.startsWith(value);
     });
 
     if(filtered.length === 0){
