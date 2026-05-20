@@ -301,43 +301,31 @@ function performSearch(value){
         return;
     }
 
-    let filtered =
-        questions.filter(q => {
+    const filtered = questions.filter(q => {
 
         let question = q.question;
 
         question = question
-            .replace(/^\d+\./, "")
+            .replace(/^\s*\d+\.\s*/, "")
             .trim()
             .toLowerCase();
 
-        return question.indexOf(value) === 0;
+        const words =
+            question.split(/\s+/);
+
+        const searchWords =
+            value.split(/\s+/);
+
+        const beginning =
+            words
+            .slice(0, searchWords.length + 2)
+            .join(" ");
+
+        return similarity(
+            beginning,
+            value
+        ) > 0.6;
     });
-
-    if(filtered.length === 0){
-
-        filtered =
-            questions.filter(q => {
-
-            let question = q.question;
-
-            question = question
-                .replace(/^\d+\./, "")
-                .trim()
-                .toLowerCase();
-
-            const start =
-                question
-                .split(" ")
-                .slice(
-                    0,
-                    value.split(" ").length + 2
-                )
-                .join(" ");
-
-            return similarity(start, value) > 0.6;
-        });
-    }
 
     render(filtered, value);
 }
