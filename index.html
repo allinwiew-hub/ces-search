@@ -280,6 +280,9 @@ function performSearch(value){
     .trim()
     .toLowerCase();
 
+console.log("QUESTION:", question);
+console.log("SEARCH:", value);
+
 return question.startsWith(value);
     });
 
