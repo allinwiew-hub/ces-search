@@ -286,6 +286,7 @@ function similarity(a, b){
 function performSearch(value){
 
     value = value
+        .replace(/^\d+\s*/, "")
         .trim()
         .toLowerCase();
 
@@ -306,25 +307,11 @@ function performSearch(value){
         let question = q.question;
 
         question = question
-            .replace(/^\s*\d+\.\s*/, "")
+            .replace(/^\d+\.\s*/, "")
             .trim()
             .toLowerCase();
 
-        const words =
-            question.split(/\s+/);
-
-        const searchWords =
-            value.split(/\s+/);
-
-        const beginning =
-            words
-            .slice(0, searchWords.length + 2)
-            .join(" ");
-
-        return similarity(
-            beginning,
-            value
-        ) > 0.6;
+        return question.includes(value);
     });
 
     render(filtered, value);
